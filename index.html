@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seven Wipe - Premium Doorstep Car Wash</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- PhonePe Payment Gateway SDK -->
+    <script src="https://checkout-static.phonepe.com/checkout-web/v1/index.js"></script>
+    
+    <style>
+        html {
+            scroll-behavior: smooth;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .animate-slide-up { animation: slideUp 0.4s ease-out forwards; }
+        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+        
+        #booking-modal .overflow-y-auto::-webkit-scrollbar { width: 6px; }
+        #booking-modal .overflow-y-auto::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 4px; }
+        #booking-modal .overflow-y-auto::-webkit-scrollbar-track { background-color: transparent; }
+        
+        /* Custom styles for tab switching */
+        .plan-tab {
+            transition: all 0.3s ease;
+        }
+        
+        .plan-tab.active {
+            background-color: white;
+            color: #16a34a;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        /* One-time package card styles */
+        .package-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .package-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Modal styles for Terms & Privacy */
+        .legal-modal-content {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .legal-modal-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .legal-modal-content::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 4px;
+        }
+        
+        .legal-modal-content::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+        
+        /* PhonePe payment button style */
+        .phonepe-pay-button {
+            background: linear-gradient(135deg, #8040ff 0%, #5227cc 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .phonepe-pay-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(128, 64, 255, 0.3);
+        }
+        
+        .phonepe-pay-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-900 font-sans">
+    <!-- Header (Keep all existing header code same) -->
+    <header id="header" class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/95 backdrop-blur-md shadow-md py-2">
+        <!-- ... keep existing header code ... -->
+    </header>
+
+    <!-- Keep all other sections exactly as they are -->
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-green-900 overflow-hidden min-h-[90vh] flex items-center">
+        <!-- ... keep hero section code ... -->
+    </section>
+
+    <!-- Trust Badges -->
+    <section class="py-12 bg-white shadow-sm border-b border-gray-100 relative z-20 -mt-8 mx-4 md:mx-auto max-w-7xl rounded-xl">
+        <!-- ... keep trust badges code ... -->
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="py-20 bg-slate-50">
+        <!-- ... keep how it works code ... -->
+    </section>
+
+    <!-- ONE-TIME SERVICE PACKAGES -->
+    <section id="one-time-services" class="py-20 bg-gradient-to-b from-slate-50 to-white">
+        <!-- ... keep one-time services code ... -->
+    </section>
+
+    <!-- Subscription Pricing -->
+    <section id="pricing" class="py-20 bg-white">
+        <!-- ... keep pricing section code ... -->
+    </section>
+
+    <!-- Guarantee Section -->
+    <section id="guarantee" class="py-20 bg-white">
+        <!-- ... keep guarantee section code ... -->
+    </section>
+
+    <!-- Testimonials -->
+    <section id="reviews" class="py-20 bg-slate-50">
+        <!-- ... keep testimonials code ... -->
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-20 bg-white">
+        <!-- ... keep FAQ code ... -->
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-20 bg-slate-900 text-white">
+        <!-- ... keep contact section code ... -->
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-green-950 text-green-100 py-16 border-t border-green-900">
+        <!-- ... keep footer code ... -->
+    </footer>
+
+    <!-- Booking Modal -->
+    <div id="booking-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+        <!-- ... keep booking modal code ... -->
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+        <!-- ... keep success modal code ... -->
+    </div>
+
+    <!-- Legal Modals -->
+    <!-- ... keep legal modals code ... -->
+
+    <script>
+        // Updated PhonePe Configuration for Production
+        const PHONEPE_CONFIG = {
+            clientId: "SU2512291620289336999793",
+            environment: "PRODUCTION", // Changed to PRODUCTION
+            merchantId: "SU2512291620289336999793",
+            redirectUrl: window.location.origin + "/payment-success.html",
+            callbackUrl: window.location.origin + "/.netlify/functions/payment-callback",
+            // Note: Client secret should NEVER be exposed in frontend code
+            // We'll handle it server-side via Netlify Functions
+        };
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const icon = mobileMenuBtn.querySelector('i');
+            if (mobileMenu.classList.contains('hidden')) {
+                icon.setAttribute('data-lucide', 'menu');
+            } else {
+                icon.setAttribute('data-lucide', 'x');
+            }
+            lucide.createIcons();
+        });
+        
+        function closeMobileMenu() {
+            mobileMenu.classList.add('hidden');
+            const icon = mobileMenuBtn.querySelector('i');
+            icon.setAttribute('data-lucide', 'menu');
+            lucide.createIcons();
+        }
+        
+        // FAQ toggle
+        function toggleFAQ(index) {
+            const answer = document.getElementById(`faq-answer-${index}`);
+            const icon = document.querySelector(`#faq-${index} i`);
+            
+            answer.classList.toggle('hidden');
+            
+            if (answer.classList.contains('hidden')) {
+                icon.setAttribute('data-lucide', 'chevron-down');
+            } else {
+                icon.setAttribute('data-lucide', 'chevron-up');
+            }
+            lucide.createIcons();
+        }
+        
+        // Plan tab switching
+        function switchPlanTab(planType) {
+            // Update tabs
+            document.querySelectorAll('.plan-tab').forEach(tab => {
+                tab.classList.remove('active');
+                tab.classList.add('text-slate-500', 'hover:text-slate-900');
+                tab.classList.remove('bg-white', 'text-green-600', 'shadow-sm', 'ring-1', 'ring-black/5');
+            });
+            
+            const activeTab = document.getElementById(`tab-${planType.toLowerCase()}`);
+            activeTab.classList.add('active');
+            activeTab.classList.remove('text-slate-500', 'hover:text-slate-900');
+            activeTab.classList.add('bg-white', 'text-green-600', 'shadow-sm', 'ring-1', 'ring-black/5');
+            
+            // Update content
+            document.querySelectorAll('.plan-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            document.getElementById(`plan-${planType.toLowerCase()}`).classList.remove('hidden');
+            
+            // Update modal if open
+            if (document.getElementById('booking-modal').classList.contains('hidden') === false) {
+                document.getElementById('modal-frequency').value = planType;
+                updatePrice();
+            }
+        }
+        
+        // Plan selection for modal
+        function selectPlan(planName, frequency) {
+            openBookingModal();
+            document.getElementById('modal-plan').value = planName;
+            document.getElementById('modal-frequency').value = frequency;
+            updatePrice();
+        }
+        
+        // One-time service booking
+        function bookOneTimeService(packageName, price) {
+            const message = `Book ${packageName} One-Time Wash @ ₹${price}`;
+            const whatsappUrl = `https://wa.me/917026321860?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+        
+        // Modal functions
+        let selectedPlan = 'Basic';
+        let selectedFrequency = 'WEEKLY';
+        
+        function openBookingModal(plan, frequency) {
+            if (plan) selectedPlan = plan;
+            if (frequency) selectedFrequency = frequency;
+            
+            document.getElementById('booking-modal').classList.remove('hidden');
+            document.getElementById('modal-plan').value = selectedPlan;
+            document.getElementById('modal-frequency').value = selectedFrequency;
+            updatePrice();
+        }
+        
+        function closeBookingModal() {
+            document.getElementById('booking-modal').classList.add('hidden');
+        }
+        
+        function closeSuccessModal() {
+            document.getElementById('success-modal').classList.add('hidden');
+            closeBookingModal();
+        }
+        
+        // Legal modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+        
+        // Price calculation
+        const pricingData = {
+            WEEKLY: {
+                Basic: { price: 499, mrp: 699 },
+                Standard: { price: 599, mrp: 799 },
+                Premium: { price: 699, mrp: 999 }
+            },
+            ALTERNATE: {
+                Basic: { price: 1199, mrp: 1599 },
+                Standard: { price: 1249, mrp: 1699 },
+                Premium: { price: 1299, mrp: 1899 }
+            },
+            DAILY: {
+                Basic: { price: 1799, mrp: 2499 },
+                Standard: { price: 1899, mrp: 2599 },
+                Premium: { price: 1999, mrp: 2799 }
+            }
+        };
+        
+        function updatePrice() {
+            const plan = document.getElementById('modal-plan').value;
+            const frequency = document.getElementById('modal-frequency').value;
+            const price = pricingData[frequency][plan].price;
+            document.getElementById('selected-price').textContent = `₹${price}`;
+        }
+        
+        // Initialize price update listeners
+        document.getElementById('modal-plan').addEventListener('change', updatePrice);
+        document.getElementById('modal-frequency').addEventListener('change', updatePrice);
+        
+        // Generate unique ID for transactions
+        function generateTransactionId() {
+            return 'TXN' + Date.now() + Math.floor(Math.random() * 1000);
+        }
+        
+        // Handle form submission for PhonePe payment
+        document.getElementById('booking-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const plan = document.getElementById('modal-plan').value;
+            const frequency = document.getElementById('modal-frequency').value;
+            const price = pricingData[frequency][plan].price;
+            
+            if (price <= 0) {
+                alert("Invalid plan selection. Please re-select your plan.");
+                return;
+            }
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('customer-name').value,
+                phone: document.getElementById('customer-phone').value,
+                altPhone: document.getElementById('alt-phone').value || '',
+                address: document.getElementById('customer-address').value,
+                carMake: document.getElementById('car-make').value,
+                carModel: document.getElementById('car-model').value,
+                carType: document.getElementById('car-type').value,
+                vehicleNumber: document.getElementById('vehicle-number').value.toUpperCase(),
+                timeSlot: document.getElementById('time-slot').value,
+                plan: plan,
+                frequency: frequency,
+                price: price,
+                transactionId: generateTransactionId(),
+                timestamp: Date.now()
+            };
+            
+            // Show loading
+            const submitBtn = document.getElementById('submit-booking');
+            const originalText = submitBtn.textContent;
+            submitBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 mr-2 animate-spin"></i> Processing...';
+            submitBtn.disabled = true;
+            
+            try {
+                // Store booking data in localStorage for retrieval after payment
+                localStorage.setItem('pendingBooking_' + formData.transactionId, JSON.stringify(formData));
+                
+                // Call Netlify Function to initiate payment
+                const response = await fetch('/.netlify/functions/initiate-payment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        amount: price,
+                        transactionId: formData.transactionId,
+                        phone: formData.phone,
+                        name: formData.name,
+                        plan: `${plan} (${frequency})`
+                    })
+                });
+                
+                const paymentData = await response.json();
+                
+                if (paymentData.success) {
+                    // Initialize PhonePe checkout
+                    phonepe.Checkout.configure({
+                        merchantId: PHONEPE_CONFIG.merchantId,
+                        environment: PHONEPE_CONFIG.environment
+                    });
+                    
+                    // Open PhonePe payment page
+                    phonepe.Checkout.initiate({
+                        body: paymentData.payload,
+                        headers: {
+                            'x-verify': paymentData.xVerify
+                        }
+                    }, 
+                    function(paymentResponse) {
+                        // Handle payment response
+                        if (paymentResponse.code === 'PAYMENT_SUCCESS') {
+                            processPaymentSuccess(formData);
+                        } else if (paymentResponse.code === 'PAYMENT_ERROR') {
+                            alert('Payment failed. Please try again.');
+                            submitBtn.innerHTML = originalText;
+                            submitBtn.disabled = false;
+                        } else {
+                            // Payment cancelled or other status
+                            submitBtn.innerHTML = originalText;
+                            submitBtn.disabled = false;
+                        }
+                    });
+                } else {
+                    throw new Error(paymentData.error || 'Payment initialization failed');
+                }
+                
+            } catch (error) {
+                console.error("Payment Error:", error);
+                alert("Payment initialization failed. Please try again.");
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+        
+        // Process payment success
+        function processPaymentSuccess(formData) {
+            // Update success modal
+            document.getElementById('success-name').textContent = formData.name;
+            document.getElementById('success-plan').textContent = `${formData.plan} (${formData.frequency})`;
+            document.getElementById('success-vehicle').textContent = `${formData.carMake} ${formData.carModel}`;
+            document.getElementById('success-vehicle-number').textContent = formData.vehicleNumber;
+            document.getElementById('success-time').textContent = formData.timeSlot;
+            document.getElementById('success-payment-id').textContent = formData.transactionId;
+            
+            // Show success modal
+            document.getElementById('booking-modal').classList.add('hidden');
+            document.getElementById('success-modal').classList.remove('hidden');
+            
+            // Reset button
+            const submitBtn = document.getElementById('submit-booking');
+            submitBtn.innerHTML = '<i data-lucide="zap" class="w-5 h-5 mr-2"></i>Pay with PhonePe & Book Now';
+            submitBtn.disabled = false;
+            
+            // Send WhatsApp message to admin
+            sendBookingToWhatsApp(formData);
+            
+            // Clear stored data
+            localStorage.removeItem('pendingBooking_' + formData.transactionId);
+        }
+        
+        // Send booking details to WhatsApp
+        function sendBookingToWhatsApp(formData) {
+            const text = `*✅ NEW PAID BOOKING VIA PHONEPE!* 🚗%0A%0A` +
+                `*Transaction ID:* ${formData.transactionId}%0A` +
+                `*Amount Paid:* ₹${formData.price}%0A` +
+                `*Payment Method:* PhonePe%0A` +
+                `--------------------------------%0A` +
+                `*Plan:* ${formData.plan} (${formData.frequency})%0A` +
+                `*Pref. Time:* ${formData.timeSlot}%0A` +
+                `*Customer Name:* ${formData.name}%0A` +
+                `*Phone:* ${formData.phone}%0A` +
+                `*Alt Phone:* ${formData.altPhone || "N/A"}%0A` +
+                `*Car:* ${formData.carMake} ${formData.carModel}%0A` +
+                `*Type:* ${formData.carType}%0A` +
+                `*Vehicle No:* ${formData.vehicleNumber}%0A` +
+                `*Address:* ${formData.address}%0A%0A` +
+                `_Please assign a cleaner ASAP._`;
+
+            const whatsappUrl = `https://wa.me/917026321860?text=${text}`;
+            window.open(whatsappUrl, '_blank');
+        }
+        
+        // Contact form submission
+        function submitContactForm() {
+            const name = document.getElementById('contact-name').value;
+            const phone = document.getElementById('contact-phone').value;
+            const message = document.getElementById('contact-message').value;
+            
+            const text = `*New Contact Form Submission*%0A%0A` +
+                `*Name:* ${name}%0A` +
+                `*Phone:* ${phone}%0A` +
+                `*Message:* ${message}%0A%0A` +
+                `_Please respond as soon as possible._`;
+            
+            const whatsappUrl = `https://wa.me/917026321860?text=${encodeURIComponent(text)}`;
+            window.open(whatsappUrl, '_blank');
+            
+            // Show success message
+            alert('Thank you for your message! We will contact you shortly.');
+            
+            // Reset form
+            document.getElementById('contact-name').value = '';
+            document.getElementById('contact-phone').value = '';
+            document.getElementById('contact-message').value = '';
+        }
+        
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 20) {
+                header.classList.add('bg-white/95', 'backdrop-blur-md', 'shadow-md', 'py-2');
+                header.classList.remove('bg-transparent', 'py-4');
+            } else {
+                header.classList.remove('bg-white/95', 'backdrop-blur-md', 'shadow-md', 'py-2');
+                header.classList.add('bg-transparent', 'py-4');
+            }
+        });
+        
+        // Initialize with scroll effect
+        window.dispatchEvent(new Event('scroll'));
+        
+        // Close modal when clicking outside
+        document.addEventListener('click', function(event) {
+            const modals = ['terms-modal', 'privacy-modal', 'refund-modal', 'booking-modal', 'success-modal'];
+            modals.forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                if (modal && !modal.classList.contains('hidden')) {
+                    if (event.target === modal) {
+                        modal.classList.add('hidden');
+                    }
+                }
+            });
+        });
+        
+        // Check URL for payment success
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const transactionId = urlParams.get('transactionId');
+            const status = urlParams.get('status');
+            
+            if (status === 'SUCCESS' && transactionId) {
+                const bookingData = JSON.parse(localStorage.getItem('pendingBooking_' + transactionId));
+                if (bookingData) {
+                    processPaymentSuccess(bookingData);
+                    // Clean URL
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
+            }
+            
+            // Check for payment failure
+            if (status === 'FAILURE') {
+                alert('Payment failed. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>
